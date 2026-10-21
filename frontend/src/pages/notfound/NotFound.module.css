@@ -1,0 +1,43 @@
+.card {
+  background-color: var(--surface);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-soft);
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+}
+
+.note {
+  color: var(--ink-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.backButton {
+  align-self: flex-start;
+  margin-top: var(--space-2);
+  padding: 8px 18px;
+  background: var(--cta-gradient);
+  color: #FFFFFF;
+  border-radius: var(--radius-full);
+  font-family: var(--font-heading);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(91, 75, 219, 0.25);
+  transition: all 150ms ease-out;
+}
+
+.backButton:hover {
+  opacity: 0.95;
+}

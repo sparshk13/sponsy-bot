@@ -1,0 +1,75 @@
+:root {
+  /* Twilight Backgrounds & Surfaces */
+  --backdrop: linear-gradient(135deg, #E6E0FB 0%, #FDE6DA 100%);
+  --surface: #FFFFFF;
+  --mist: #F4F2FB;
+  --mist-hover: #ECE8F7;
+  --feed-gradient: linear-gradient(to bottom, #F6F3FD 0%, #FDF1EA 100%);
+  --active-gradient: linear-gradient(to right, #EFEBFF, #FFFFFF);
+
+  /* Component tokens */
+  --paper: #FFFFFF;
+  --paper-2: #F4F2FB;
+  --field: #F4F2FB;
+  --rule: #ECE8F7;
+
+  /* Typography & Ink */
+  --ink: #1E1B3A;
+  --ink-muted: #6B6788;
+  --ink-2: #6B6788;
+
+  /* Brand & Accents */
+  --brand: #5B4BDB;
+  --brand-start: #6A5AE0;
+  --brand-end: #4A3BC7;
+  --brand-deep: #3B2FA8;
+  --brand-peach: #FFB88C;
+  --online: #2FC27D;
+
+  --cta-gradient: linear-gradient(to right, #6A5AE0, #4A3BC7);
+
+  /* Status Tokens */
+  --rail: #1E1B3A;
+  --rail-ink: #FFFFFF;
+  --rail-ink-2: #A5A1C8;
+  --approve: #5B4BDB;
+  --approve-ink: #FFFFFF;
+  --warn-bg: #FFEAD8;
+  --warn-ink: #8F3E0B;
+  --stop: #E03E3E;
+  --stop-bg: #FEECEB;
+
+  /* Fonts */
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-heading: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Typography scale */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 20px;
+  --text-xl: 26px;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-soft: 0 8px 30px rgba(60, 40, 160, 0.10);
+  --shadow-subtle: 0 4px 16px rgba(60, 40, 160, 0.06);
+  --shadow-sm: 0 2px 8px rgba(60, 40, 160, 0.05);
+}
