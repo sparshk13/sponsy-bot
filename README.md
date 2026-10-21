@@ -54,10 +54,17 @@ Run database migrations:
 alembic upgrade head
 ```
 
-Create the initial administrator account:
+Create your administrator account:
 
 ```bash
-python scripts/create_admin.py admin@example.com "Admin Name" "YourSecurePassword123"
+python scripts/create_admin.py admin@example.com "Admin User" "YourSecurePassword123"
+```
+
+Alternatively, to explore the platform with populated demo campaigns, companies, and drafts:
+
+```bash
+python scripts/seed_demo.py
+# Demo sign-in: admin@example.com / Password12345!
 ```
 
 Start the FastAPI backend server:
