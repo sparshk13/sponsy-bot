@@ -1,6 +1,7 @@
 """Security middleware enforcing SEC-15, SEC-39, and SEC-41."""
 
 import json
+import os
 import time
 from urllib.parse import urlparse
 
@@ -78,11 +79,20 @@ def validate_host_header(host: str | None) -> bool:
         expected_host = "localhost"
     expected_host = expected_host.lower()
 
-    if settings.app_env == "prod":
-        return req_host in (expected_host, "testserver")
+    allowed = {expected_host}
+    render_host = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+    if render_host:
+        allowed.add(render_host.lower())
 
-    # In dev/test environments allow localhost, 127.0.0.1, and testserver
-    return req_host in (expected_host, "localhost", "127.0.0.1", "testserver", "caddy", "api")
+    if settings.app_env == "prod":
+        allowed.add("testserver")
+        return req_host in allowed
+
+    # In dev/test environments allow localhost, 127.0.0.1, testserver, caddy, api, or render domains
+    allowed.update({"localhost", "127.0.0.1", "testserver", "caddy", "api"})
+    if req_host.endswith(".onrender.com"):
+        return True
+    return req_host in allowed
 
 
 def validate_origin_header(origin: str | None, referer: str | None) -> bool:
@@ -97,10 +107,20 @@ def validate_origin_header(origin: str | None, referer: str | None) -> bool:
 
     parsed = urlparse(target_url)
     req_host = (parsed.hostname or "").lower()
-    if settings.app_env == "prod":
-        return req_host in (expected_host, "testserver")
 
-    return req_host in (expected_host, "localhost", "127.0.0.1", "testserver")
+    allowed = {expected_host}
+    render_host = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+    if render_host:
+        allowed.add(render_host.lower())
+
+    if settings.app_env == "prod":
+        allowed.add("testserver")
+        return req_host in allowed
+
+    allowed.update({"localhost", "127.0.0.1", "testserver"})
+    if req_host.endswith(".onrender.com"):
+        return True
+    return req_host in allowed
 
 
 async def send_error_response(send: Send, status_code: int, detail: str) -> None:
@@ -134,7 +154,7 @@ class SecurityHeadersMiddleware:
 
         # SEC-39: Validate Host header (skip healthz)
         if path != "/api/healthz":
-            host = _get_header(headers, b"host")
+            host = _get_header(headers, b"x-forwarded-host") or _get_header(headers, b"host")
             if not validate_host_header(host):
                 await send_error_response(send, 400, "Invalid Host header")
                 return
@@ -143,6 +163,7 @@ class SecurityHeadersMiddleware:
         if method in ("POST", "PUT", "PATCH", "DELETE"):
             origin = _get_header(headers, b"origin")
             referer = _get_header(headers, b"referer")
+
             if not validate_origin_header(origin, referer):
                 await send_error_response(send, 403, "Invalid Origin or Referer")
                 return
